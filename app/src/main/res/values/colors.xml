@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3881b9</color>
+    <color name="colorPrimaryDark">#1877bf</color>
+    <color name="colorAccent">#24b35b</color>
+    <color name="white">#FFFF</color>
+    <color name="darkGrey">#252525</color>
+    <color name="darkGreen">#067800</color>
+
+    <!-- switch color -->
+    <color name="colorControlActivated">#38b690</color>
+    <color name="colorSwitchThumbNormal">#fdd3d3</color>
+    <color name="colorForeground">#42221f1f</color>
+</resources>

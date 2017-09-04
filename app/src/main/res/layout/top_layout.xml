@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/topLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/bg"
+        android:layout_width="fill_parent"
+        android:layout_height="300sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@color/colorPrimary" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="250sp"
+        android:layout_height="250sp"
+        app:srcCompat="@drawable/outer"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="210sp"
+        android:layout_height="210sp"
+        app:srcCompat="@drawable/inner"
+        android:layout_marginTop="19dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/imageView5"
+        android:layout_marginLeft="20dp"
+        android:tint="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="75"
+        android:textColor="@color/white"
+        android:layout_below="@+id/temp_decrement"
+        android:layout_centerHorizontal="true" />
+
+
+    <ImageButton
+        android:id="@+id/addRoom"
+        android:layout_width="60sp"
+        android:layout_height="50sp"
+        android:adjustViewBounds="false"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:layout_below="@+id/imageView5"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/current_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/temp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="77"  />
+
+    <Switch
+        android:id="@+id/fan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/bg"
+        android:layout_centerHorizontal="true"
+        android:theme="@style/Switch"
+        />
+
+    <TextView
+        android:id="@+id/fan_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fan"
+        android:layout_centerHorizontal="true"
+        android:text="F A N"
+        android:textColor="@color/white"
+        android:textSize="15sp"/>
+
+    <Button
+        android:id="@+id/toggleHeatAC"
+        android:layout_width="60sp"
+        android:layout_height="50sp"
+        android:text="OFF"
+        android:layout_marginStart="7dp"
+        android:layout_below="@+id/imageView5"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/temp_increment"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:text="+"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        />
+
+    <Button
+        android:id="@+id/temp_decrement"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:text="-"
+
+        android:layout_below="@+id/temp_increment"
+        android:layout_alignParentEnd="true" />
+
+
+</RelativeLayout>
