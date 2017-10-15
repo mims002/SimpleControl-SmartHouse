@@ -44,20 +44,9 @@ class House {
         if(MainActivity.DEBUG) Log.d("DEBUG-House", "Recieved get device call"+ Arrays.toString(name));
 
         RoomData room = this.getRoom(name[0]);
-        DeviceData deviceData = null;
 
+        DeviceData deviceData = room.getDevice(deviceName);
 
-
-        for(int i=0; i<room.devices.size(); i++){
-            //debug
-            if(MainActivity.DEBUG)
-                Log.d("DEBUG-House", "Searching at "+ room.devices.get(i).getName() );
-
-            if(room.devices.get(i).getNameTag().equals(deviceName)) {
-                deviceData = room.devices.get(i);
-                break;
-            }
-        }
         //debug
         if(deviceData == null)
             if(MainActivity.DEBUG) Log.e("DEBUG-House", "Searched for device "+ deviceName + "->" + "Failed");

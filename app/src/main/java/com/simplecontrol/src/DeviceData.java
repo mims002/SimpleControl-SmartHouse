@@ -139,7 +139,7 @@ public class DeviceData{
     public int getPort() {
         return port;
     }
-
+    ////////////////////////////////////////////////////////////////////////////
     @Override
     public String toString(){
         return ("DeviceName: "+ name+" | IP: " + IP +  " | port: " + port + " | command: " + on+"/"+off+"| usercreated: "+this.isUserCreated());

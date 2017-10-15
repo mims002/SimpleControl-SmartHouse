@@ -1,5 +1,6 @@
 package com.simplecontrol.AndroidTest;
 
+import android.os.SystemClock;
 import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.view.View;
@@ -19,10 +20,15 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.simplecontrol.src.R.id.addDeviceClicked;
+import static com.simplecontrol.src.R.id.removeDevice;
 import static junit.framework.Assert.assertNotNull;
 
 /**
+ * This class is used for testing the app using espresso
+ * this app was tested on Samsung Galaxy S7 edge
  * Created by Mrinmoy Mondal on 9/2/2017.
+ *
  */
 public class MainActivityTest {
     @Rule
@@ -91,6 +97,61 @@ public class MainActivityTest {
         Espresso.onView(withId(R.id.offCommand)).perform(typeText("F"));
         Espresso.closeSoftKeyboard();
 
+        Espresso.onView(withId(addDeviceClicked)).perform(longClick());
+        Espresso.onView(withText("Fan")).perform(longClick());
+
+        SystemClock.sleep(1000);
+
+    }
+
+    @Test
+    public void TestAddDevice005(){
+        Espresso.onView(withId(R.id.addRoom)).perform(click());
+        Espresso.onView(withId(R.id.roomName)).perform(typeText(roomName001));
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(R.id.addButtonClicked)).perform(click());
+
+        Espresso.onView(withText(roomName001)).check(matches(isDisplayed()));
+
+        //adds a button
+        Espresso.onView(withId(R.id.addDevice)).perform(click());
+
+        Espresso.onView(withId(R.id.deviceName)).perform(typeText("Fan"));
+        Espresso.onView(withId(R.id.deviceIP)).perform(typeText("192.168.29.11"));
+        Espresso.onView(withId(R.id.devicePort)).perform(typeText("2222"));
+        Espresso.onView(withId(R.id.onCommand)).perform(typeText("O"));
+        Espresso.onView(withId(R.id.offCommand)).perform(typeText("F"));
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(addDeviceClicked)).perform(click());
+
+
+
+        //adds a button
+        Espresso.onView(withId(R.id.addDevice)).perform(click());
+
+        Espresso.onView(withId(R.id.deviceName)).perform(typeText("OutSide Lights"));
+        Espresso.onView(withId(R.id.deviceIP)).perform(typeText("192.168.29.11"));
+        Espresso.onView(withId(R.id.devicePort)).perform(typeText("2222"));
+        Espresso.onView(withId(R.id.onCommand)).perform(typeText("t"));
+        Espresso.onView(withId(R.id.offCommand)).perform(typeText("c"));
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(addDeviceClicked)).perform(click());
+        //adds a button
+        Espresso.onView(withId(R.id.addDevice)).perform(click());
+
+        Espresso.onView(withId(R.id.deviceName)).perform(typeText("OutLet 1 "));
+        Espresso.onView(withId(R.id.deviceIP)).perform(typeText("192.168.29.11"));
+        Espresso.onView(withId(R.id.devicePort)).perform(typeText("2222"));
+        Espresso.onView(withId(R.id.onCommand)).perform(typeText("t"));
+        Espresso.onView(withId(R.id.offCommand)).perform(typeText("c"));
+        Espresso.closeSoftKeyboard();
+        Espresso.onView(withId(addDeviceClicked)).perform(click());
+
+
+        Espresso.onView(withId(addDeviceClicked)).perform(click());
+
+
+
     }
 
     @Test
@@ -111,11 +172,14 @@ public class MainActivityTest {
         Espresso.onView(withId(R.id.onCommand)).perform(typeText("O"));
         Espresso.onView(withId(R.id.offCommand)).perform(typeText("F"));
         Espresso.closeSoftKeyboard();
-        Espresso.onView(withId(R.id.addDeviceClicked)).perform(click());
+        Espresso.onView(withId(addDeviceClicked)).perform(click());
 
 
         //remove the button
-        Espresso.onView(withText("Device One")).perform(longClick());
+        Espresso.onView(withText("Fan")).perform(longClick());
+        Espresso.onView(withId(removeDevice)).perform(longClick());
+
+        SystemClock.sleep(1000);
 
     }
 

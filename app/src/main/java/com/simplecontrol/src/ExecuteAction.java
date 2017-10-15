@@ -154,7 +154,7 @@ public class ExecuteAction implements View.OnClickListener, View.OnLongClickList
 
                 try{
                     port = Integer.parseInt(al.editText[2].getText().toString());
-                    if(al.editText[0].getText().toString().length()>10)
+                    if(al.editText[0].getText().toString().length()>20)
                         throw new Exception("Exceeded max number of Characters");
 
                     int y=  Integer.parseInt(al.editText[1].getText().toString().split("\\.")[0])+
@@ -174,25 +174,43 @@ public class ExecuteAction implements View.OnClickListener, View.OnLongClickList
 
 
                 RoomData room = house.getRoom(s.split("###")[0]);
-                Button bt2n = new Button(al.context);
+                View deviceV =  LayoutInflater.from(al.context).inflate(R.layout.devices,null);
+
+                Button bt2n = (Button) deviceV.findViewById(R.id.deviceButtonMain);
+                Button bt2On= (Button) deviceV.findViewById(R.id.deviceButtonOn);
+                Button bt2Off=(Button) deviceV.findViewById(R.id.deviceButtonOff);
+
                 bt2n.setText(newdname);
-                bt2n.setTag(s.split("###")[0]+"###"+newdname);
+                bt2n.setTag(roomName+"###"+newdname+"###main");
+                bt2On.setTag(roomName+"###"+newdname+"###On");
+                bt2Off.setTag(roomName+"###"+newdname+"###Off");
+
                 bt2n.setOnLongClickListener(al.onLongClickListener);
-                room.addNewDevice(new DeviceData(newdname, IP,port, ON,OFF, bt2n, DeviceData.Type.BUTTON));
+                bt2n.setOnClickListener(al.onClickListener);
+                bt2On.setOnClickListener(al.onClickListener);
+                bt2Off.setOnClickListener(al.onClickListener);
+
+                room.addNewDevice(new DeviceData(newdname, IP,port, ON,OFF, deviceV, DeviceData.Type.BUTTON));
                 if (MainActivity.DEBUG) Log.d("DEBUG-ExecuteAction", "Received call for adding device to room " + room.getRoomName());
 
                 break;
-            //toggles the device on<->off
+            //toggles the device on, off
             default:
-                if(device.status()){
-                    device.Off();
-                    Toast.makeText(al.context,"Tuning off "+device.getName()+" in "+ roomName,Toast.LENGTH_LONG).show();
+                if(MainActivity.DEBUG) Log.d("DEBUG-ExcecuteDevice", "performing funtion - "+ s.split("###")[2] );
+                String command = s.split("###")[2];
+
+                switch (command){
+                    case "On":
+                        device.On();
+                        Toast.makeText(al.context,"Tuning on "+device.getName()+" in "+ roomName,Toast.LENGTH_LONG).show();
+                        break;
+                    case "Off":
+                        device.Off();
+                        Toast.makeText(al.context,"Tuning off "+device.getName()+" in "+ roomName,Toast.LENGTH_LONG).show();
+                        break;
+
                 }
-                else{
-                    device.On();
-                    Toast.makeText(al.context,"Tuning on "+device.getName()+" in "+ roomName,Toast.LENGTH_LONG).show();
-                }
-                device.toggle();
+
         }
 
     }
