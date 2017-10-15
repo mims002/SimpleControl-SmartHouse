@@ -25,7 +25,7 @@ public class DeviceData{
 
     private String IP, on, off,name;
 
-    private int port;
+    private int port ;
     private boolean status;
 
     private boolean notUICreated;

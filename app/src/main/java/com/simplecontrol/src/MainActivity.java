@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 /**
  * This class holds the main method (onCreate). It tell android what to perform when its first run, paused and closed.
 *  All objects that will be shared across other cases are created here.
+ * v0.5
 *
  **/
 public class MainActivity extends AppCompatActivity{
