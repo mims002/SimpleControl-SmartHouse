@@ -5,9 +5,8 @@ Smart House App
 <img src="Sample%20Images/Screenshot_20170921-044223.png" height="400px"></img>
 <img src="Sample%20Images/Screenshot_20170921-044231.png" height="400px"></img>
 <img src="Sample%20Images/Screenshot_20170921-044243.png" height="400px"></img>
-<img src="Sample%20Images/Screenshot_20170921-044252.png" height="400px"></img>
-<img src="Sample%20Images/Screenshot_20170921-050413.png" height="400px"></img>
-<img src="Sample%20Images/Screenshot_20170921-052007.png" height="400px"></img>
+<img src="Sample%20Images/Screenshot_20170921-044259.png" height="400px"></img>
+
 
 
 ## Description
