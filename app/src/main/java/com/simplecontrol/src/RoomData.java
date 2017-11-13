@@ -57,7 +57,7 @@ public class RoomData {
         this.roomName = roomName;
         this.separator = "###";
         this.createView =createView;
-        this.saveDeviceData = new SaveDeviceData(false);
+       // this.saveDeviceData = new SaveDeviceData(false);
         //if its not the main ac/heat system then a room needs to be added
         if (createView) {
             //
@@ -81,7 +81,7 @@ public class RoomData {
             if (MainActivity.DEBUG) Log.d("DEBUG-RoomData", "Created Room - " + roomName);
 
 
-            saveDeviceData.restore();
+            //saveDeviceData.restore();
         }
 
     }
@@ -98,7 +98,7 @@ public class RoomData {
         dt.setNameTag(roomName + separator + dt.getName()+ separator + "parent");
 
         //saves the device only if its a user created device
-        if(dt.isUserCreated()) saveDeviceData.saveData(dt);
+        //if(dt.isUserCreated()) saveDeviceData.saveData(dt);
 
 
     }

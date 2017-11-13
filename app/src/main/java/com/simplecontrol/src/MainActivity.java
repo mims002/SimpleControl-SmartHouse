@@ -1,5 +1,6 @@
 package com.simplecontrol.src;
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity{
     TopView topView;
     //saved data will be stored in an shared preference
     SavedData savedData;
+    DBHandler db;
    ///////////////////////////////////////////////////
 
 
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         mainView = (LinearLayout)findViewById(R.id.linearLayout) ;
+        //adds the Thermostat view
         al = new AppLayout(this,mainView,this);
 
         house = new House(al);
@@ -54,13 +57,12 @@ public class MainActivity extends AppCompatActivity{
     ///////////////////////////////////////////////////
     //initializes everything on main thermostat
     public void init(){
-
         // /adds the top view to mainActivity
         al.addLayout(topView.getView());
-        //adds the thermostat as the mainRoom
-        house.addRoom("MainRoom",null);
+        //adds the mainRoom even if it already exits
+        house.addRoom("MainRoom", null);
         //restores all the other rooms
-        savedData.restore();
+        house.onCreate();
 
 
         house.getRoom("MainRoom").addDevice(new DeviceData("addTemp",topView._addTemp,DeviceData.Type.BUTTON));
@@ -69,6 +71,24 @@ public class MainActivity extends AppCompatActivity{
         house.getRoom("MainRoom").addDevice(new DeviceData("addRoom",topView._addRoom, DeviceData.Type.BUTTON));
 
         if(MainActivity.DEBUG) Log.d("DEBUG-Main: "," After main room added-->"+ house.getRoom("MainRoom").toString());
+       // databaseTester();
+    }
+
+    private void databaseTester() {
+        db.addNewDevice(new DeviceData("addTemp",topView._addTemp,DeviceData.Type.BUTTON));
+        db.addNewDevice(new DeviceData("dassad",topView._addTemp,DeviceData.Type.BUTTON));
+        db.addNewDevice(new DeviceData("dasdsdsad",topView._addTemp,DeviceData.Type.BUTTON));
+        db.addNewDevice(new DeviceData("dsad",topView._addTemp,DeviceData.Type.BUTTON));
+
+        Log.d("DEBUG-Main: ", db.dataBaseToString());
+
+        ContentValues values = new ContentValues();
+        values.put("test1" , "test11");
+        values.put("test2" , "test22");
+        values.put("test3" , "test33");
+
+        Log.d("DEBUG-Main: ", values.toString());
+
 
     }
 

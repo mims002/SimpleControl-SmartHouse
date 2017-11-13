@@ -16,23 +16,50 @@ class House {
     private ArrayList<RoomData> allRooms;
     //appLayout
     private AppLayout al;
+    final static int HOUSE_VERSION = 1;
 
-    public House(AppLayout al){
+    //database
+    DBHandler db;
+
+    House(AppLayout al){
         this.al=al;
         allRooms = new ArrayList<RoomData>();
+        db = new DBHandler(al.context,null,null, HOUSE_VERSION);
+
+    }
+
+    //restores all the rooms
+    void onCreate(){
+
+       for(String roomName[]: db.getAllRooms()){
+           if(MainActivity.DEBUG) Log.d("DEBUG-House", "Restored room "+ roomName[0]+ "| Create View "+ roomName[1]);
+
+           if(roomName[1].equals(1+""))
+               allRooms.add(new RoomData(roomName[0],al,true));
+           else
+               allRooms.add(new RoomData(roomName[0],null,false));
+       }
     }
 
     //adds new room only. same rooms are not added twice
     //do not call on an empty house
-    protected void addRoom(String name){
-        if(this.getRoom(name)==null)
+    //looks into database and adds a room if necessary
+    //add to view
+    void addRoom(String name){
+
+        if(!db.hasRoom(name)){
             allRooms.add(new RoomData(name,al,true));
+            db.createRoomTable(name,1);
+        }
+
+
     }
 
     //adds new room only. same rooms are not added twice
+    //does not add to view
     protected void addRoom(String name,AppLayout al){
-        if(this.getRoom(name)==null)
-            allRooms.add(new RoomData(name,this.al,false));
+        db.createRoomTable(name,0);
+        allRooms.add(new RoomData(name,this.al,false));
     }
 
     //returns the reference to a device
@@ -59,6 +86,7 @@ class House {
 
     //returns the reference to a room
     public RoomData getRoom(String roomName){
+
         //debug
         if(MainActivity.DEBUG) Log.d("DEBUG-House", "Searched for room "+ roomName);
 
@@ -69,9 +97,10 @@ class House {
         }
 
         //debug
-        if(room == null)
+        if(db.hasRoom(roomName))
+            if(MainActivity.DEBUG) Log.d("DEBUG-House", "Searched for room "+ roomName + "->" + "Found");
+        else
             if(MainActivity.DEBUG) Log.e("DEBUG-House", "Searched for room "+ roomName + "->" + "Failed");
-        else if(MainActivity.DEBUG) Log.d("DEBUG-House", "Searched for room "+ roomName + "->" + "Found");
 
         return room;
     }

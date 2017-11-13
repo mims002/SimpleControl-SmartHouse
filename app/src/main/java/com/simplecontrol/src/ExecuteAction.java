@@ -109,9 +109,6 @@ public class ExecuteAction implements View.OnClickListener, View.OnLongClickList
                     Toast.makeText(al.context,"Please Enter a valid Room name",Toast.LENGTH_LONG).show();
 
                 }else {
-
-                    //saves the room in savedData
-                    if(house.getRoom(name)==null) savedData.insertRoomName(name);
                     //adds the room through house
                     house.addRoom(name);
 
