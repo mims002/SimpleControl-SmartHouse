@@ -87,6 +87,7 @@ public class DBHandler extends SQLiteOpenHelper{
 
         db.execSQL(query);
 
+        //adds a table name in house table
         ContentValues values = new ContentValues();
         values.put(HOUSE_COLUMNS_ARRAY[1], name);
         values.put(HOUSE_COLUMNS_ARRAY[2], createView);
@@ -97,7 +98,17 @@ public class DBHandler extends SQLiteOpenHelper{
         //print the database when debugging
         if(MainActivity.DEBUG) Log.d("DEBUG-DBHandler: ", "Created a new Room Table: " + StringCheck(name));
         if(MainActivity.DEBUG) Log.d("DEBUG-DBHandler: ", "printed house: "+dataBaseToString());
-}
+    }
+
+    public void insertDevice(String roomName, ContentValues contentValues){
+        SQLiteDatabase db = getReadableDatabase();
+
+
+        db.insert(roomName,null, contentValues);
+
+        Log.d("DEBUG-DBHandler",dataBaseToString(roomName));
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 

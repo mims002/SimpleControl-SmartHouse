@@ -12,7 +12,7 @@ import java.util.Arrays;
  */
 
 class House {
-    //will hold all the devices
+    //will hold all the rooms in memory
     private ArrayList<RoomData> allRooms;
     //appLayout
     private AppLayout al;

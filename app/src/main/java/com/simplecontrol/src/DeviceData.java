@@ -63,6 +63,15 @@ public class DeviceData{
     void toggle (){
         status = !status;
     }
+    //returns the String array of Devices for databae
+    public String createDataBaseString(){
+        return "";
+    }
+
+    public static DeviceData createDeviceFromDatabaseString(String DatabaseString){
+
+        return null;
+    }
 /////////////////////////////////////////////////////////////
     //setters and getters for all the fields
     public String getOn() {

@@ -36,7 +36,9 @@ public class ExecuteAction implements View.OnClickListener, View.OnLongClickList
 
     //performs all the actions
     //add all the actions here relation to a tag
-    //must have a instance of device data
+    //must have a instance of device data\
+    //Each device has the tag "<Room Name>###<Device Name>###<function>"
+    //function can be anything the devica can perform such as on, off, or timer
     protected  void execute (String s){
         //gets the device from house
         DeviceData device = house.getDevice(s);
@@ -148,7 +150,6 @@ public class ExecuteAction implements View.OnClickListener, View.OnLongClickList
                 if(MainActivity.DEBUG) Log.d("DEBUG-ExcecuteDevice", "addDevicePressed");
                 int port ;
 
-
                 try{
                     port = Integer.parseInt(al.editText[2].getText().toString());
                     if(al.editText[0].getText().toString().length()>20)
@@ -191,7 +192,7 @@ public class ExecuteAction implements View.OnClickListener, View.OnLongClickList
                 if (MainActivity.DEBUG) Log.d("DEBUG-ExecuteAction", "Received call for adding device to room " + room.getRoomName());
 
                 break;
-            //toggles the device on, off
+            //toggles the device on, off, timer
             default:
                 if(MainActivity.DEBUG) Log.d("DEBUG-ExcecuteDevice", "performing funtion - "+ s.split("###")[2] );
                 String command = s.split("###")[2];
@@ -205,6 +206,8 @@ public class ExecuteAction implements View.OnClickListener, View.OnLongClickList
                         device.Off();
                         Toast.makeText(al.context,"Tuning off "+device.getName()+" in "+ roomName,Toast.LENGTH_LONG).show();
                         break;
+                    case "timer":
+
 
                 }
 
