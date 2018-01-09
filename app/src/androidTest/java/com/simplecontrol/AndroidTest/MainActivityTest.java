@@ -50,7 +50,7 @@ public class MainActivityTest {
     }
     @Test
     public void TestLaunch001(){
-        View view = mActivity.findViewById(R.id.linearLayout);
+        View view = mActivity.findViewById(R.id.mainLayout);
         assertNotNull(view);
     }
 
@@ -90,19 +90,20 @@ public class MainActivityTest {
         //adds a button
         Espresso.onView(withId(R.id.addDevice)).perform(click());
 
-        Espresso.onView(withId(R.id.deviceName)).perform(typeText("Fan"));
-        Espresso.onView(withId(R.id.deviceIP)).perform(typeText("192.168.29.11"));
+        Espresso.onView(withId(R.id.deviceName)).perform(typeText("Lights"));
+        Espresso.onView(withId(R.id.deviceIP)).perform(typeText("192.168.29.2"));
         Espresso.onView(withId(R.id.devicePort)).perform(typeText("2222"));
         Espresso.onView(withId(R.id.onCommand)).perform(typeText("O"));
         Espresso.onView(withId(R.id.offCommand)).perform(typeText("F"));
         Espresso.closeSoftKeyboard();
 
         Espresso.onView(withId(addDeviceClicked)).perform(longClick());
-        Espresso.onView(withText("Fan")).perform(longClick());
+        //Espresso.onView(withText("Fan")).perform(longClick());
 
         SystemClock.sleep(1000);
 
     }
+
 
     @Test
     public void TestAddDevice005(){

@@ -1,12 +1,13 @@
 package com.simplecontrol.src;
 
 import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -14,19 +15,19 @@ import android.widget.TextView;
 
 /**
  * Created by Mrinmoy Mondal on 8/16/2017.
- * The topView is the houses main AC/HEAT system.
- * This class holds the topView layout and the main should interact with it
+ * The thermostatRoom is the houses main AC/HEAT system.
+ * This class holds the thermostatRoom layout and the main should interact with it
  * to access the top view. It set the buttons pressed to the ActionListener class.
  * There should only be one top view it. There area setters in plcae to change the temperature
  */
 
-public class TopView {
+public class ThermostatRoom extends RoomData{
     //creates the a instance of the layout
-    private View _TopView;
+    private View thermostatView;
     //activity from main
     private Activity _activity;
 
-    //variables to control the topView
+    //variables to control the thermostatRoom
     private TextView _temperature;
     private TextView _setTemperature;
 
@@ -42,26 +43,79 @@ public class TopView {
     /// state of the current settings
     private int acStatus;
 
+    ThermostatDevice thermostatDevice;
 
     //initializes everything from main activity and all the widgets
-     TopView(AppLayout appLayout ) {
+     ThermostatRoom(String roomName, AppLayout appLayout )  {
+         super(roomName,appLayout);
+
+
+
+     }
+
+    @Override
+    View createView() {
+
+        thermostatView = LayoutInflater.from(getContext()).inflate(R.layout.top_layout, null);
+        thermostatView.setTag(getRoomName());
+
+
+
+        ImageView image = (ImageView)getView().findViewById(R.id.bg);
+        Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
+        Bitmap newbitmap = ImageHelper.getRoundedCornerBitmap(bitmap,30);
+
+        image.setImageBitmap(newbitmap);
+
+
+
+        return thermostatView;
+
+    }
+
+
+    @Override
+    void addDevice(DeviceData deviceData) {
+         this.thermostatDevice = (ThermostatDevice) deviceData;
+         thermostatDevice.createDataBaseString();
+
+    }
+
+    @Override
+     DeviceData getDevice(String deviceName){
+         return this.thermostatDevice;
+     }
+
+    @Override
+    View getView() {
+        return this.thermostatView;
+    }
+
+    @Override
+    void updateDevice(String deviceName, DeviceData newDeviceData) {
+        thermostatDevice = (ThermostatDevice) newDeviceData;
+    }
+}
+
+/*
+
          Context context =appLayout.context;
          View.OnClickListener onClickListener= appLayout.onClickListener;
          View.OnLongClickListener onLongClickListener = appLayout.onLongClickListener;
-         appLayout.topView = this;
+         appLayout.thermostatRoom = this;
 
-        _TopView = LayoutInflater.from(context).inflate(R.layout.top_layout,null);
+        thermostatView = LayoutInflater.from(context).inflate(R.layout.top_layout,null);
 
-        _acHeatOFF = (Button)_TopView.findViewById(R.id.toggleHeatAC);
-        _addTemp   = (Button)_TopView.findViewById(R.id.temp_increment);
-        _subTemp   = (Button)_TopView.findViewById(R.id.temp_decrement);
+        _acHeatOFF = (Button)thermostatView.findViewById(R.id.toggleHeatAC);
+        _addTemp   = (Button)thermostatView.findViewById(R.id.temp_increment);
+        _subTemp   = (Button)thermostatView.findViewById(R.id.temp_decrement);
 
-        _addRoom   = (ImageButton)_TopView.findViewById(R.id.addRoom);
+        _addRoom   = (ImageButton)thermostatView.findViewById(R.id.addRoom);
 
-        _fanSwitch = (Switch)_TopView.findViewById(R.id.fan);
+        _fanSwitch = (Switch)thermostatView.findViewById(R.id.fan);
 
-        _setTemperature     = (TextView)_TopView.findViewById(R.id.temp);
-        _temperature  = (TextView)_TopView.findViewById(R.id.current_temperature);
+        _setTemperature     = (TextView)thermostatView.findViewById(R.id.temp);
+        _temperature  = (TextView)thermostatView.findViewById(R.id.current_temperature);
 
 
         //sets the buttons to on listeners
@@ -117,8 +171,9 @@ public class TopView {
 
     //returns the view object
     protected View getView(){
-        return _TopView;
+        return thermostatView;
     }
 
 
 }
+*/

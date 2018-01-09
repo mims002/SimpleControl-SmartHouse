@@ -6,9 +6,9 @@ import android.util.Log;
 
 /**
  * Created by Mrinmoy Mondal on 8/30/2017.
- * SaVE will restore and save all the devices and rooms.
+ * SaVE will restore and save all the simple_switch_view and rooms.
  * It uses a sharedPreference to save everything.
- * The constructor needs access to the app layout and the house.
+ * The constructor needs access to the appLayout layout and the house.
  * LOG tag - DEBUG-SavedData
  */
 

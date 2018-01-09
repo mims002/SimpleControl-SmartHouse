@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnOrderPreserved="false">
+
+
+
+
+
+    <Button
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/deviceButtonMain"
+        android:backgroundTint="@color/white"
+
+        />
+
+    <Button
+        android:id="@+id/deviceButtonOn"
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="right|fill"
+        android:layout_toStartOf="@+id/deviceButtonOff"
+        android:backgroundTint="@color/white"
+        android:text="I"
+        android:textColor="#61af0e" />
+
+    <Button
+        android:id="@+id/deviceButtonOff"
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="12dp"
+        android:layout_toStartOf="@+id/deviceButtonTimer"
+        android:backgroundTint="@color/white"
+        android:text="O"
+        android:textColor="#c62b48" />
+
+    <ImageButton
+        android:id="@+id/deviceButtonTimer"
+        android:layout_width="50sp"
+        android:layout_height="48sp"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="12dp"
+        android:layout_toStartOf="@+id/deviceButtonSettings"
+        android:backgroundTint="@color/white"
+        android:tint="#ff9100"
+        android:hapticFeedbackEnabled="true"
+        app:srcCompat="@android:drawable/ic_menu_more" />
+
+    <ImageButton
+        android:id="@+id/deviceButtonSettings"
+        android:layout_width="50sp"
+        android:layout_height="48sp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:backgroundTint="@color/white"
+
+
+        android:tint="@color/colorPrimary"
+        app:srcCompat="@android:drawable/ic_menu_info_details" />
+
+
+
+
+
+</RelativeLayout>

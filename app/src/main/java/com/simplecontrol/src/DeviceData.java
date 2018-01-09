@@ -1,111 +1,79 @@
 package com.simplecontrol.src;
 
-import android.os.AsyncTask;
+import android.content.ContentValues;
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Mrinmoy Mondal on 8/17/2017.
  * This class holds the on off command for each device and uses an AsyncTask to execute it.
  * It has parameters IP address, port and the String for on or off.
+ *
+ * Device tag "<Room Name>###<Device Name>###<function>"
  */
 
 
-public class DeviceData{
+abstract class DeviceData{
     //holds the type of view it is
     public enum Type{
-        SWITCH, BUTTON, TEXTFIELD
+        SIMPLE_SWITCH, BUTTON, TEXTFIELD, THERMOSTAT,
+
     }
 
-    private String IP, on, off,name;
+    private String name,roomName, tag;
 
     private int port ;
     private boolean status;
 
-    private boolean notUICreated;
+    private boolean hasView;
 
     private View view;
     private Type type;
 
-    DeviceData(String name, View view, Type type){
+    String seperator = "###";
+
+    DeviceData(String name, String roomName, Type type){
+        this.roomName = roomName;
         this.name = name;
         this.type=type;
-        this.view = view;
-        this.notUICreated = false;
-    }
-    DeviceData(String name, String IP, int port, String on, String off, View view,Type type) {
-        this(name,view,type);
+        this.tag = roomName + seperator + name + seperator + "parent";
 
-        this.IP = IP;
-        this.on = on;
-        this.off = off;
-        this.port = port;
-        this.status= false;
-        this.notUICreated = true;
-        if(MainActivity.DEBUG) Log.d("DEBUG", "Created - "+toString());
-
-    }
-    //deivice on
-    void On() {
-        new AsyncThread().execute(this.on);
-    }
-    //device off
-    void Off() {
-        new AsyncThread().execute(this.off);
-    }
-    //turns the state to off or on
-    void toggle (){
-        status = !status;
-    }
-    //returns the String array of Devices for databae
-    public String createDataBaseString(){
-        return "";
+        hasView = false;
     }
 
-    public static DeviceData createDeviceFromDatabaseString(String DatabaseString){
 
-        return null;
-    }
+
+
+
+    static  String   DATABASE_COLUMN_NAME = ("(id INTEGER PRIMARY KEY, roomName TEXT, NAME TEXT, TYPE TEXT, data4 TEXT, data5 TEXT,data6 TEXT, data7 TEXT, data8 TEXT)");
+    static  String[] DATABASE_COLUMN_NAME_ARRAY = {"id", "roomName", "NAME", "TYPE", "data4", "data5","data6", "data7", "data8"};
+
+
+
 /////////////////////////////////////////////////////////////
-    //setters and getters for all the fields
-    public String getOn() {
-        return on;
+    boolean hasView(){
+        return view != null;
     }
 
-    public void setOn(String on) {
-        this.on = on;
-    }
-
-    public String getOff() {
-        return off;
-    }
-
-    public void setOff(String off) {
-        this.off = off;
-    }
-
-    public void setView(View view) {
-        this.view = view;
-    }
-    public boolean isUserCreated(){
-        return notUICreated;
-    }
     View getView() {
         return view;
     }
 
-    public void setNameTag(String n) {
-        view.setTag(n);
+    abstract View createView(Context context);
+
+    public void setTag(String n) {
+        tag = n;
     }
-    public String getNameTag() {
-       return view.getTag().toString();
+    public String getTag() {
+        return tag;
     }
+
+    abstract void function1();
+    abstract void function2();
+    abstract void function3();
+    abstract void function4();
 
     //if the device is on or off
     public boolean status() {
@@ -116,13 +84,6 @@ public class DeviceData{
         this.status = status;
     }
 
-    public void setIP(String IP) {
-        this.IP = IP;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
 
     public Type getType() {
         return type;
@@ -135,54 +96,51 @@ public class DeviceData{
     public String getName() {
         return name;
     }
+    public String getRoomName() {
+        return roomName;
+    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getIP() {
 
-        return IP;
+    //prints a debug message
+    void printDebugMsg(String msg){
+
+        if(MainActivity.DEBUG)Log.d("DEBUG-"+this.getClass().toString(),msg);
     }
 
-    public int getPort() {
-        return port;
+    /**
+     * Creates the contentValues needed for database
+     * @return Database ContentValues
+     */
+    abstract ContentValues createDataBaseString();
+
+    abstract String getFunction(int f);
+
+    String getRootTag(){
+        return roomName+seperator+name+seperator;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof DeviceData) {
+            DeviceData y = ((DeviceData) o);
+
+            return (y.getRootTag().equals(this.getRootTag()));
+        }
+        return false;
+    }
+
+    abstract void updateDeviceData(DeviceData deviceData);
+
+
     ////////////////////////////////////////////////////////////////////////////
     @Override
     public String toString(){
-        return ("DeviceName: "+ name+" | IP: " + IP +  " | port: " + port + " | command: " + on+"/"+off+"| usercreated: "+this.isUserCreated());
+        return ("DeviceName: "+ name + "| Room Name: "+ roomName+ "| Type: "+type);
     }
 
-    //send the command to a selected device
-    class AsyncThread extends AsyncTask<String,Void,Void> {
-
-
-        @Override
-        protected Void doInBackground(String... params) {
-            Socket skt = null;
-            DataOutputStream dOut = null;
-            DataInputStream dIn = null;
-            try {
-                if (MainActivity.DEBUG) {
-                    Log.d("DEBUG", "DeviceName: " + name + " | IP: " + IP + " | port: " + port + " | command sent: \"" + params[0] + "\"");
-                }
-                skt = new Socket(IP, port);
-                skt.setTcpNoDelay(true);
-
-                dOut = new DataOutputStream(skt.getOutputStream());
-                dIn = new DataInputStream(skt.getInputStream());
-                TimeUnit.SECONDS.sleep(1);
-                dOut.writeBytes(params[0] + "\n");
-                // Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_LONG).show();
-                skt.close();
-            } catch (IOException | InterruptedException e) {
-                if (MainActivity.DEBUG) {
-                    if(MainActivity.DEBUG) Log.e("DEBUG", "Controller failed: " + e.getMessage());
-                }
-            }
-            return null;
-        }
-    }
 }
 

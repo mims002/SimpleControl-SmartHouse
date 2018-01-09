@@ -15,9 +15,9 @@ import android.widget.LinearLayout;
 
 public class AppLayout {
 
-    protected Context context;
+    final Context context;
     //House thermostat object
-     TopView topView;
+     ThermostatRoom thermostatRoom;
     //activity
      Activity mainActivity;
     //on Click Listeners
@@ -27,6 +27,7 @@ public class AppLayout {
     //alert dialog
      AlertDialog alertDialog;
      EditText [] editText;
+     DBHandler db;
 
 
 
@@ -38,18 +39,15 @@ public class AppLayout {
     //all actions executor object
 
 
-    public AppLayout(Context context, LinearLayout mainView, Activity mainActivity ) {
+    AppLayout(Context context, LinearLayout mainView, Activity mainActivity ) {
         this.context = context;
         this.mainView = mainView;
         this.mainActivity = mainActivity;
 
-
-
-
-
     }
 
-    protected void addLayout(View view){
+
+    void addLayout(View view){
         mainView.addView(view);
     }
 

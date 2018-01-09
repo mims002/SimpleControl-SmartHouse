@@ -14,21 +14,28 @@
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/gridLayout"
+        android:layout_alignBottom="@+id/iconsforAddRoom"
         android:layout_alignParentTop="true"
         android:layout_alignEnd="@+id/gridLayout"
-        app:srcCompat="@drawable/bg"
+        app:srcCompat="@mipmap/bg4"
         />
 
     <TextView
         android:id="@+id/TitleBar"
         android:layout_width="match_parent"
         android:layout_height="32sp"
-        android:textSize="25sp"
-        android:textColor="@color/white"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="14dp"
+
+        android:shadowColor="#50000000"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+
         android:text="Sample"
-        android:layout_toStartOf="@+id/addDevice"
-        />
+        android:textColor="@color/white"
+        android:textSize="25sp" />
 
     <GridLayout
         android:layout_width="match_parent"
@@ -42,14 +49,33 @@
 
 
     </GridLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gridLayout"
+        android:gravity="right"
+        android:paddingTop="10dp"
 
-    <ImageButton
-        android:id="@+id/addDevice"
-        android:layout_width="40sp"
-        android:layout_height="40sp"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true" />
+
+        android:id="@+id/iconsforAddRoom">
+
+
+        <ImageButton
+            android:id="@+id/addDevice"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:tint="@color/buttonInternal"
+            app:srcCompat="@android:drawable/ic_menu_add"
+
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowColor="#50000000"
+            android:shadowRadius="5"
+            />
+
+
+    </LinearLayout>
+
 
 
 

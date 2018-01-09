@@ -21,10 +21,14 @@ class House {
     //database
     DBHandler db;
 
+
     House(AppLayout al){
         this.al=al;
+
         allRooms = new ArrayList<RoomData>();
         db = new DBHandler(al.context,null,null, HOUSE_VERSION);
+
+        al.db = db;
 
     }
 
@@ -34,10 +38,13 @@ class House {
        for(String roomName[]: db.getAllRooms()){
            if(MainActivity.DEBUG) Log.d("DEBUG-House", "Restored room "+ roomName[0]+ "| Create View "+ roomName[1]);
 
-           if(roomName[1].equals(1+""))
-               allRooms.add(new RoomData(roomName[0],al,true));
+           if(roomName[1].equals(1+"")) {
+               RoomData roomData = new RoomData(roomName[0], al);
+               al.addLayout(roomData.getView());
+               allRooms.add(roomData);
+           }
            else
-               allRooms.add(new RoomData(roomName[0],null,false));
+               allRooms.add(new RoomData(roomName[0],null));
        }
     }
 
@@ -48,18 +55,21 @@ class House {
     void addRoom(String name){
 
         if(!db.hasRoom(name)){
-            allRooms.add(new RoomData(name,al,true));
-            db.createRoomTable(name,1);
-        }
+            RoomData roomData = new RoomData(name, al);
+            al.addLayout(roomData.createView());
+            allRooms.add(roomData);
 
+            db.addRoom(name, (1));
+        }
 
     }
 
     //adds new room only. same rooms are not added twice
     //does not add to view
     protected void addRoom(String name,AppLayout al){
-        db.createRoomTable(name,0);
-        allRooms.add(new RoomData(name,this.al,false));
+        db.addRoom(name,0);
+        allRooms.add(new RoomData(name,al));
+
     }
 
     //returns the reference to a device
@@ -72,7 +82,7 @@ class House {
 
         RoomData room = this.getRoom(name[0]);
 
-        DeviceData deviceData = room.getDevice(deviceName);
+        DeviceData deviceData = room.getDevice(name[1]);
 
         //debug
         if(deviceData == null)
@@ -104,6 +114,13 @@ class House {
 
         return room;
     }
+
+    //prints a debug message
+    void printDebugMsg(String msg){
+
+        if(MainActivity.DEBUG)Log.d("DEBUG-"+this.getClass().getSimpleName(),msg);
+    }
+
     /*
     public void saveAll(){
         for(int i=0; i<allRooms.size();i++){

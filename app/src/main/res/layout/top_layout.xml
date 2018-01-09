@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/topLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="5dp">
 
     <ImageView
         android:id="@+id/bg"
@@ -12,7 +13,9 @@
         android:layout_height="300sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        app:srcCompat="@color/colorPrimary" />
+        android:background="#3b2d58"
+        app:srcCompat="@mipmap/bg4"
+        android:scaleType="centerCrop"/>
 
     <ImageView
         android:id="@+id/imageView5"
@@ -20,7 +23,8 @@
         android:layout_height="250sp"
         app:srcCompat="@drawable/outer"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:tint="@color/colorPrimaryDark"/>
 
     <ImageView
         android:id="@+id/imageView6"
@@ -30,8 +34,8 @@
         android:layout_marginTop="19dp"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/imageView5"
-        android:layout_marginLeft="20dp"
-        android:tint="@color/colorPrimaryDark"/>
+        android:layout_marginLeft="21dp"
+        android:tint="#e02e4c"/>
 
     <TextView
         android:id="@+id/temp"
